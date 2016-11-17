@@ -125,7 +125,7 @@ var FangTianYi = {
 	flatten: function(arr) {
 		var result = []
 		for (var i = 0; i < arr.length; i++) {
-			if (isArray(arr[i])) {
+			if (Array.isArray(arr[i])) {
 				result = result.concat(arr[i])
 			} else {
 				result.push(arr[i])
@@ -133,10 +133,10 @@ var FangTianYi = {
 		}
 		return result
 	},
-	fromParis: function(arr) {
+
+	fromPairs: function(arr) {
 		var obj = new Object()
-		for (i = 0; i < arr.length) {
-			// obj([i][0])=obj([i][1])
+		for (var i = 0; i < arr.length; i++) {
 			obj[arr[i][0]] = arr[i][1]
 		}
 		return obj
