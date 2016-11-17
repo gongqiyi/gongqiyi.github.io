@@ -30,6 +30,16 @@ var FangTianYi = {
 	drop: function(arr, n) {
 		arr.splice(0, n)
 		return arr
+	},
+	dropright: function(arr, n) {
+		var l = arr.length
+		var i = l
+		if (i > n) {
+			arr.splice(i - n, n)
+		}
+		if (i < n) {
+			return []
+		}
+		return arr
 	}
-
 }
