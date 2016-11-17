@@ -61,5 +61,89 @@ var FangTianYi = {
 
 		}
 		return arr1
+	},
+	reverse: function(arr) {
+
+		var len = arr.length
+		var result = []
+		for (var i = 0; i < len; i++) {
+			result.push(arr.pop())
+		}
+		for (var i = 0; i < len; i++) {
+			arr.push(result[i])
+		}
+		return arr
+	},
+	pull: function(array, value) {
+
+		var index
+		for (var i = 1; i < arguments.length; i++) {
+			index = array.indexOf(arguments[i])
+			while (index >= 0) {
+				array.splice(index, 1)
+				index = array.indexOf(arguments[i])
+			}
+		}
+		return array
+	},
+	pullAt: function(array, indexes) {
+
+		for (var i = indexes.length; i >= 0; i--) {
+			pullItem = array.splice(indexes[i], 1)
+		}
+		return array
+	},
+	intersection: function() {
+
+
+		var result = []
+		var temp
+		var isAll = true
+
+		for (var i = 0; i < arguments.length; i++) {
+			temp = arguments[0][i]
+
+			for (var j = 1; j < arguments.length; j++) {
+				if (arguments[j].indexOf(temp) < 0) { //当j=1，temp=2，从头到尾搜索数组，看2出现的次数
+					isAll = false
+				}
+			}
+			if (isAll) {
+				result.push(temp)
+			}
+		}
+		return result
+	},
+	fill: function(arr, value, m, n) {
+
+		for (i = m; i < n; i++) {
+			arr.splice(i, 1, value)
+				//arr[i]=value  一样的效果 
+		}
+		return arr
+	},
+	flatten: function(arr) {
+		var result = []
+		for (var i = 0; i < arr.length; i++) {
+			if (isArray(arr[i])) {
+				result = result.concat(arr[i])
+			} else {
+				result.push(arr[i])
+			}
+		}
+		return result
+	},
+	fromParis: function(arr) {
+		var obj = new Object()
+		for (i = 0; i < arr.length) {
+			// obj([i][0])=obj([i][1])
+			obj[arr[i][0]] = arr[i][1]
+		}
+		return obj
+	},
+	initial: function(arr) {
+
+		arr.splice((arr.length) - 1, 1)
+		return arr
 	}
 }
