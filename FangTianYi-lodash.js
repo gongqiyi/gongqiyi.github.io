@@ -41,5 +41,25 @@ var FangTianYi = {
 			return []
 		}
 		return arr
+	},
+	concat: function(arr, value) {
+		var result = arr
+		for (var i = 1; i < arguments.length; i++) {
+			result = result.concat(arguments[i])
+		}
+		return result
+	},
+
+	diffirence: function(arr1, arr2) {
+
+		for (var i = 0; i < arr1.length; i++) {
+			for (var j = 0; j <= arr2.length; j++) {
+				if (arr1[i] == arr2[j]) {
+					arr1.splice(i, 1)
+				}
+			}
+
+		}
+		return arr1
 	}
 }
