@@ -31,7 +31,7 @@ var FangTianYi = {
 		arr.splice(0, n)
 		return arr
 	},
-	dropright: function(arr, n) {
+	dropRight: function(arr, n) {
 		var l = arr.length
 		var i = l
 		if (i > n) {
@@ -50,7 +50,7 @@ var FangTianYi = {
 		return result
 	},
 
-	diffirence: function(arr1, arr2) {
+	difference: function(arr1, arr2) {
 
 		for (var i = 0; i < arr1.length; i++) {
 			for (var j = 0; j <= arr2.length; j++) {
