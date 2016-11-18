@@ -18,20 +18,27 @@ var FangTianYi = {
 		return result
 	},
 	compact: function(arr) {
+		var result = []
 		for (var i = 0; i < arr.length; i++) {
-			if (!arr[i]) {
-				arr.splice(i, 1)
+			if (arr[i]) {
+				result.push(arr[i])
 
 			}
 
 		}
-		return arr //函数一定要return
+		return result //函数一定要return
 	},
 	drop: function(arr, n) {
+		if (n == undefined) {
+			n = 1
+		}
 		arr.splice(0, n)
 		return arr
 	},
 	dropRight: function(arr, n) {
+		if (n == undefined) {
+			n = 1
+		}
 		var l = arr.length
 		var i = l
 		if (i > n) {
@@ -115,7 +122,12 @@ var FangTianYi = {
 		return result
 	},
 	fill: function(arr, value, m, n) {
-
+		if (m == undefined) {
+			m = 0
+		}
+		if (m == undefined) {
+			n = arr.length
+		}
 		for (i = m; i < n; i++) {
 			arr.splice(i, 1, value)
 				//arr[i]=value  一样的效果 
@@ -134,6 +146,21 @@ var FangTianYi = {
 		return result
 	},
 
+	flattenDeep: function(array) {
+
+		for (var i = 1;; i++) {
+			var tOrF = true
+			array = FangTianYi.flatten(array)
+			for (var j = 0; j < array.length; j++) { //它如果是二维数组就一直递归下去
+				if (array[j][0] != undefined) {
+					tOrF = false
+				}
+			}
+			if (tOrF) {
+				return array
+			}
+		}
+	},
 	fromPairs: function(arr) {
 		var obj = new Object()
 		for (var i = 0; i < arr.length; i++) {
@@ -145,5 +172,37 @@ var FangTianYi = {
 
 		arr.splice((arr.length) - 1, 1)
 		return arr
+	},
+	map: function(arr, fn) {
+		var result = []
+		for (i = 0; i < arr.length; i++) {
+			result.push(fn(arr[i], i, arr))
+		}
+		return result
+	},
+	filter: function(collection, predicate) {
+		var result = []
+		for (i = 0; i < arr.length; i++) {
+			if (predicate(collection[i], i, collection)) { //经过predicate函数后的结果
+				result.push(collection[i])
+			}
+		}
+		return result
+	},
+
+	split: function(string, separator, limit) {
+
+		var result = string.split(separator)
+		result.splice(limit)
+		return result
+	},
+	tail: function(array) {
+		array.splice(0, 1)
+		return array
+	},
+	take: function(array, n) {
+		var l = array.length
+		array.splice(0, l - n)
+		return array
 	}
 }
