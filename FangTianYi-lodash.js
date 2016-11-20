@@ -121,14 +121,14 @@ var FangTianYi = {
 		}
 		return result
 	},
-	fill: function(arr, value, m, n) {
-		if (m == undefined) {
-			m = 0
+	fill: function(arr, value, start, end) {
+		if (start == undefined) {
+			start = 0
 		}
-		if (m == undefined) {
-			n = arr.length
+		if (end == undefined) {
+			end = arr.length
 		}
-		for (i = m; i < n; i++) {
+		for (i = start; i < n; i++) {
 			arr.splice(i, 1, value)
 				//arr[i]=value  一样的效果 
 		}
@@ -182,12 +182,15 @@ var FangTianYi = {
 	},
 	filter: function(collection, predicate) {
 		var result = []
-		for (i = 0; i < arr.length; i++) {
+		for (i = 0; i < collection.length; i++) {
 			if (predicate(collection[i], i, collection)) { //经过predicate函数后的结果
 				result.push(collection[i])
 			}
+			return result
 		}
-		return result
+		// function equal(v){
+		// return v>2
+
 	},
 
 	split: function(string, separator, limit) {
@@ -204,5 +207,152 @@ var FangTianYi = {
 		var l = array.length
 		array.splice(0, l - n)
 		return array
+	},
+	takeRight: function(arr, n) {
+
+		// result = []
+		// if (var n == 0) {
+		// 	return arr
+		// }
+		// if (i >= arr.length) {
+		// 	return arr
+		// }
+		// for (i = 0; i < arr.length; i++) {
+		// 	result.push(arr[i])
+		// }
+		if (n == undefined) {
+			n = 1
+		}
+		if (n == 0) {
+			return []
+		}
+		return slice(-n)
+	},
+	// union: function(arr) {
+	// 	for (i = o; i < arr.length; i++) {
+	// 		array = FangTianYi.filter(array)
+	// 	}
+	// 	return arr
+	// }
+
+	union: function(arrs) {
+		var result = []
+		for (var i = 0; i < arguments.length; i++) {
+			for (var j = 0; j < rguments.length; j++) {
+				if (result.indexOf(arguments[i][j] < 0)) {
+					result.push(arguments[i][j])
+				}
+			}
+		}
+		return result
+	},
+
+	uniq: function(arr) {
+
+		var result = []
+		for (var i = 0; i < arr.length; i++) {
+			if (result.indexOf(arr[i]) < 0) { //检索的字符串值没有出现，则该方法返回 -1
+				result.push(arr[i])
+			}
+		}
+		return result
+	},
+	zip: function(arrays) {
+		debugger
+		var result = new Array()
+		for (var i = 0; i < arrays.length; i++) {
+			result[i] = []
+		}
+		for (var i = 0; i < arguments[0].length; i++) {
+			for (var j = 0; j < arguments.length; j++) {
+				result[i].push(arguments[j][i])
+			}
+		}
+		return result
+	},
+	without: function(array, values) {
+
+		var result = []
+		for (var i = 0; i < array.length; i++) {
+			var need = true
+			for (var j = 1; j < arguments.length; j++) {
+				if (array[i] === arguments[j]) {
+					need = false
+					break
+				}
+			}
+			if (need == true) {
+				result.push(array[i])
+			}
+		}
+		return result
+	},
+	partition: function(collection, predicate) {
+
+		var result = [
+			[],
+			[]
+		]
+		for (var i = 0; i < collection.length; i++) {
+			if (predicate(collection[i])) {
+				result[0].push(collection[i])
+			} else {
+				result[1].push(collection[i])
+			}
+		}
+		return result
+	},
+	every: function(collection, predicate) {
+		for (i = 0; i < collection.length; i++) {
+			if (!predicate(collection[i], i, collection)) {
+				return false
+			}
+		}
+		return true
+	},
+	some: function(collection, predicate) {
+		for (i = 0; i < collection.length; i++) {
+			if (predicate(collection[i], i, collection)) {
+				return true
+			}
+		}
+		return false
+	},
+	reduce: function(collection, reducer, initial) {
+		if (initial == undefined) {
+			initial = collection[0]
+			star = 1
+		}
+		var result = initial
+		for (var i = 0; i < collection.length; i++) {
+			result = reducer(result, collection[i])
+		}
+		return result
+	},
+	head: function(arr) {
+		return arr.shift(0, 1)
+	},
+	join: function(arr, separator) {
+		var result = arr
+		result = result.join(n)
+		return result
+	},
+	rejecct: function(collection, predicate) {
+		var result = []
+		for (var i = 0; i < collection.arr; i++) {
+			if (!predicate(collection[i], icollection)) {
+				result.push(collection[i])
+			}
+		}
+		return result
+	},
+	last: function(arr) {
+		return arr.pop()
+	},
+	indexOf: function(array, value, fromIdex) {
+		return array.join(vale, fromIdex)
+	},
+	nth: function(array, n) {
+		return array.slice(n, n + 1)[0]
 	}
 }
