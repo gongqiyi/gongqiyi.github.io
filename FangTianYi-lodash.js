@@ -16,7 +16,7 @@ var FangTianYi = {
    =>[['a','b','c']],['d']]
   **/
   chunk: function(arr, n) {
-    var lenC = Math.cel(arr.length / n) //因为多一个数也要成为数组，所以向上取整
+    var lenC = Math.ceil(arr.length / n) //因为多一个数也要成为数组，所以向上取整
     var lenA = arr.length
     var result = new Array(lenC) //建立一个空数组
     for (var i = 0; i < lenC; i++) {
@@ -76,7 +76,7 @@ var FangTianYi = {
     for (var i = 1; i < len; i++) {
       tmp.push(arguments[i]) //把数组需要排除的量合并成一个数组
     }
-    tmp = this.flattenDeep(temp)
+    tmp = this.flattenDeep(tmp)
     for (var i = 0; i < result.length; i++) {
       for (var j = 0; j < tmp.length; j++) {
         if (result[i] === result[j]) {
@@ -403,7 +403,7 @@ var FangTianYi = {
   head: function(arr) {
     return arr.shift(0, 1)
   },
-  join: function(arr, separator) {
+  join: function(arr, n) {
     var result = arr
     result = result.join(n)
     return result
@@ -421,7 +421,7 @@ var FangTianYi = {
     return arr.pop()
   },
   indexOf: function(array, value, fromIdex) {
-    return array.join(vale, fromIdex)
+    return array.join(value, fromIdex)
   },
   nth: function(array, n) {
     return array.slice(n, n + 1)[0]
