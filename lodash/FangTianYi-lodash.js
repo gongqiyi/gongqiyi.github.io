@@ -24,7 +24,9 @@ var FangTianYi = {
     } //这个循环是建立lenC个空数组，符合题意
     for (var j = 0; j < lenA; j++) {
       result[parseInt(j / n)][j % n] = arr[j]
-    } //  j/n为二位数组左边，j%n为二维数组右边
+    }
+    return result
+      //  j/n为二位数组左边，j%n为二维数组右边
   },
 
 
@@ -205,31 +207,93 @@ var FangTianYi = {
     }
     return arr
   },
-  flatten: function(arr) {
-    var result = []
-    for (var i = 0; i < arr.length; i++) {
-      if (Array.isArray(arr[i])) {
-        result = result.concat(arr[i])
-      } else {
-        result.push(arr[i])
-      }
+  /**
+   * 可以理解为将嵌套数组的维数减少，flattened（平坦）. 如果 isDeep 值为 true 时，嵌套数组将递归为一维数组, 否则只减少嵌套数组一个级别的维数.
+   * 参数
+   * array (Array): 需要flattened（减少维数）的嵌套数组
+   * [isDeep] (boolean): 是否深递归
+   * 返回值
+   * (Array): 返回处理后的数组
+   * 例子
+   * flatten([1, [2, 3, [4]]]);
+   * // => [1, 2, 3, [4]]
+   * // using `isDeep`
+   * flatten([1, [2, 3, [4]]], true);
+   * // => [1, 2, 3, 4]
+   **/
+  flatten: function(arr, isDeep) {
+    if (!isDeep) {
+      return flat(arr)
+    } else {
+      return flatDeep(arr)
     }
-    return result
-  },
 
-  flattenDeep: function(array) {
-
-    for (var i = 1;; i++) {
-      var tOrF = true
-      array = FangTianYi.flatten(array)
-      for (var j = 0; j < array.length; j++) { //它如果是二维数组就一直递归下去
-        if (array[j][0] != undefined) {
-          tOrF = false
+    function flatDeep(a) {
+      var resultDeep = a
+      var onOff = true
+      for (var i = 0; i < resultDeep.length; i++) {
+        if (Array.isArray(resultDeep[i])) {
+          i = 0
+          resultDeep = flat(resultDeep)
         }
       }
-      if (tOrF) {
-        return array
+      return resultDeep
+    }
+
+    function flat(a) {
+      var result = []
+      var len = a.length
+      for (var i = 0; i < len; i++) {
+        if (!Array.isArray(a[i])) {
+          result.push(a[i])
+        } else {
+          for (var j = 0; j < a[i].length; j++) {
+            result.push(a[i][j])
+          }
+        }
       }
+      return result
+    }
+  },
+  /**
+   * 递归地平坦一个嵌套的数组.相当于_.flatten(array, true)
+   * 参数
+   * array (Array): 需要
+   * 返回值
+   * (Array): 返回处理后的数组.
+   * 例子
+   * flattenDeep([1, [2, 3, [4]]]);
+   * // => [1, 2, 3, 4]
+   **/
+
+  flattenDeep: function(arr) {
+    return flatDeep(arr)
+
+    function flatDeep(a) {
+      var resultDeep = a
+      var onOff = true
+      for (var i = 0; i < resultDeep.length; i++) {
+        if (Array.isArray(resultDeep[i])) {
+          i = 0
+          resultDeep = flat(resultDeep)
+        }
+      }
+      return resultDeep
+    }
+
+    function flat(a) {
+      var result = []
+      var len = a.length
+      for (var i = 0; i < len; i++) {
+        if (!Array.isArray(a[i])) {
+          result.push(a[i])
+        } else {
+          for (var j = 0; j < a[i].length; j++) {
+            result.push(a[i][j])
+          }
+        }
+      }
+      return result
     }
   },
   fromPairs: function(arr) {
