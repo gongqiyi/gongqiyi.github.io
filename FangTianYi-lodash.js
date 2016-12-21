@@ -68,9 +68,9 @@ var FangTianYi = {
         difference([1,2,3],[4,2])=>[1,3]
         **/
 
-  difference: function(arr) {
+  difference: function(arr) { //分类讨论的思想，把复杂的问题拆分为几个小洞
     var tmp = []
-    var len = arguments.lebgth
+    var len = arguments.length
     var result = []
     for (var i = 0; i < arr.length; i++) {
       result.push(arr[i])
@@ -89,35 +89,196 @@ var FangTianYi = {
     }
     return result
   },
-  drop: function(arr, n) {
-    if (n == undefined) {
-      n = 1
+  /**
+     *这个方法类似_.diffenrence,除了它接受一个iteratee，
+    （愚人码头注：迭代器）， 调用array 和 values 中的每个元素以产生比较的标准。 结果值是从第一数组中选择。
+     iteratee 会调用一个参数：(value)。
+     （愚人码头注：首先使用迭代器分别迭代array 和 values中的每个元素，返回的值作为比较值）。 
+     
+     *@param  array(Array)：要检查的数组
+     *@param  [value](..Array):排除的值 
+     *@param [iteratee=_.identity](Array|Function|Object|string):iteratee每个元素
+     *@return (Array): 返回一个过滤值后的新数组。
+
+     例子
+     *_.differenceBy([3.1, 2.2, 1.3], [4.4, 2.5], Math.floor);
+      // => [3.1, 1.3]
+ 
+     // The `_.property` iteratee shorthand.
+     *_.differenceBy([{ 'x': 2 }, { 'x': 1 }], [{ 'x': 1 }], 'x');
+      // => [{ 'x': 2 }]
+    **/
+  diffenrenceBy: function(arr, value, iter) {
+    var result = []
+    var onOff
+    if (typeof iter == 'function') {
+      for (i = 0; i < arr.length; i++) {
+        onOff = true
+        for (var j = 0; j < value.length; j++) {
+          if (iter(value[j]) == iter(arr[i])) {
+            onOff = false
+          }
+        }
+        if (onOff) {
+          result.push(arr[i])
+        }
+      }
     }
-    arr.splice(0, n)
-    return arr
-  },
-  dropRight: function(arr, n) {
-    if (n == undefined) {
-      n = 1
-    }
-    var l = arr.length
-    var i = l
-    if (i > n) {
-      arr.splice(i - n, n)
-    }
-    if (i < n) {
-      return []
-    }
-    return arr
-  },
-  concat: function(arr, value) {
-    var result = arr
-    for (var i = 1; i < arguments.length; i++) {
-      result = result.concat(arguments[i])
+    if (typeof iter == 'string') {
+      for (var i = 0; i < arr.length; i++) {
+        onOff = true
+        for (var j = 0; j < value.length; j++) {
+          if (arr[i][iter] == value[j][iter]) {
+            //属性名里的属性值相等，即'x':1里的'x'属性名对应的值相等
+            onOff = false
+          }
+        }
+        if (onOff) {
+          result.push(arr[i])
+        }
+      }
     }
     return result
   },
+  /**
+   *这个方法类似_.difference,除了它接受一个comparator
+   
+   * @param  array (Array): 要检查的数组。
+   * @param  [values] (...Array): 排除的值。
+   * @param  [comparator] (Function): comparator 调用每个元素。
+   * @return (Array): 返回一个过滤值后的新数组。
 
+   例子
+   *var objects = [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }];
+ 
+  _.differenceWith(objects, [{ 'x': 1, 'y': 2 }], _.isEqual);
+  // => [{ 'x': 2, 'y': 1 }]
+   */
+  differenceWith: function(arr, value, compara) {
+    var result = []
+    var onOff
+    for (var i = 0; i < arr.length; i++) {
+      onOff = true
+      for (var j = 0; j < value.length; j++) {
+        if (compara(arr[i], value[j])) {
+          onOff = false
+        }
+      }
+      if (onOff) {
+        result.push(arr[i])
+      }
+    }
+    return result
+  },
+  /**
+   * 将 array 中的前 n 个元素去掉，然后返回剩余的部分。
+   * 参数
+   * array (Array): 被操作的数组。
+   * [n=1] (number): 去掉的元素个数。
+   * 返回值
+   * (Array): 返回 array 的剩余部分。
+   * 例子
+   * drop([1, 2, 3]);
+   * // => [2, 3] 默认是1开始的
+   * drop([1, 2, 3], 2);
+   * // => [3]
+   * drop([1, 2, 3], 5);
+   * // => []
+   * drop([1, 2, 3], 0);
+   * // => [1, 2, 3]
+   **/
+  drop: function(arr, del) {
+    debugger
+    var result = []
+    if (del == undefined) {
+      del = 1
+    }
+    for (var i = del; i < arr.length; i++) {
+      result.push(arr[i])
+    }
+    return result
+  },
+  /**
+   * 将 array 尾部的 n 个元素去除，并返回剩余的部分。
+   * 参数
+   * array (Array): 需要被处理数组。
+   * [n=1] (number): 去掉的元素个数。
+   * 返回值
+   * (Array): 返回 array 的剩余部分。
+   * 例子
+   * dropRight([1, 2, 3]);
+   * // => [1, 2]
+   * dropRight([1, 2, 3], 2);
+   * // => [1]
+   * dropRight([1, 2, 3], 5);
+   * // => []
+   * dropRight([1, 2, 3], 0);
+   * // => [1, 2, 3]
+   **/
+  dropRight: function(arr, index) {
+    debugger
+    var result = []
+    if (index == undefined) {
+      index = 1
+    }
+    for (var i = 0; i < arr.length - index; i++) {
+      result.push(arr[i])
+    }
+    return result
+  },
+  /**
+   * 获取数组 array的第一个元素
+   
+   * 参数
+   * array (Array): 需要查询的数组
+   * 返回值
+   * (*): 返回数组的第一个元素
+   
+   * 例子
+   * first([1, 2, 3]);
+   * // => 1
+   * first([]);
+   * // => undefined
+   **/
+  first: function(arr) {
+    if (arr == []) {
+      return undefined
+    } else {
+      return arr[0]
+    }
+  },
+  /**
+   * 创建一个新数组，将array与任何数组 或 值连接在一起。
+  
+   * 参数
+   * array (Array): 被连接的数组。
+   * [values] (...*): 连接的值。
+   * 返回值
+   * (Array): 返回连接后的新数组。
+ 
+   * 例子
+   * var array = [1];
+   * var other = concat(array, 2, [3], [[4]]);
+   * console.log(other);
+   * // => [1, 2, 3, [4]]
+   * console.log(array);
+   * // => [1]
+   **/
+  concat: function(array, af) {
+    debugger
+    var arr = []
+    l = arguments.length
+    for (var i = 0; i < l; i++) {
+      if (arguments[i] instanceof Array) {
+        for (var j = 0; j < arguments[i].length; j++) {
+          arr.push(arguments[i][j])
+        }
+      } else {
+        arr.push(arguments[i])
+      }
+    }
+    return arr
+  },
   reverse: function(arr) {
     debugger
     var len = arr.length
@@ -221,39 +382,17 @@ var FangTianYi = {
    * flatten([1, [2, 3, [4]]], true);
    * // => [1, 2, 3, 4]
    **/
-  flatten: function(arr, isDeep) {
-    if (!isDeep) {
-      return flat(arr)
-    } else {
-      return flatDeep(arr)
-    }
-
-    function flatDeep(a) {
-      var resultDeep = a
-      var onOff = true
-      for (var i = 0; i < resultDeep.length; i++) {
-        if (Array.isArray(resultDeep[i])) {
-          i = 0
-          resultDeep = flat(resultDeep)
-        }
+  flatten: function(arr) {
+    debugger
+    result = []
+    for (i = 0; i < arr.length; i++) {
+      if (Array.isArray(arr[i])) {
+        result = result.concat(arr[i])
+      } else {
+        result.push(arr[i])
       }
-      return resultDeep
     }
-
-    function flat(a) {
-      var result = []
-      var len = a.length
-      for (var i = 0; i < len; i++) {
-        if (!Array.isArray(a[i])) {
-          result.push(a[i])
-        } else {
-          for (var j = 0; j < a[i].length; j++) {
-            result.push(a[i][j])
-          }
-        }
-      }
-      return result
-    }
+    return result //一定要return
   },
   /**
    * 递归地平坦一个嵌套的数组.相当于_.flatten(array, true)
@@ -266,35 +405,22 @@ var FangTianYi = {
    * // => [1, 2, 3, 4]
    **/
 
-  flattenDeep: function(arr) {
-    return flatDeep(arr)
+  flattenDeep: function(a) {
+    debugger
+    var newArr = []
 
-    function flatDeep(a) {
-      var resultDeep = a
-      var onOff = true
-      for (var i = 0; i < resultDeep.length; i++) {
-        if (Array.isArray(resultDeep[i])) {
-          i = 0
-          resultDeep = flat(resultDeep)
-        }
-      }
-      return resultDeep
-    }
-
-    function flat(a) {
-      var result = []
-      var len = a.length
-      for (var i = 0; i < len; i++) {
-        if (!Array.isArray(a[i])) {
-          result.push(a[i])
+    function fun(a) {
+      for (var i = 0; i < a.length; i++) {
+        if (Array.isArray(a[i])) {
+          fun(a[i]) //降了一维，比如[[2]]变成[2]后
+            //再降一维
         } else {
-          for (var j = 0; j < a[i].length; j++) {
-            result.push(a[i][j])
-          }
+          newArr.push(a[i])
         }
       }
-      return result
     }
+    fun(a) //这个一定要有才能不断递归
+    return newArr
   },
   fromPairs: function(arr) {
     var obj = new Object()
@@ -484,8 +610,32 @@ var FangTianYi = {
   last: function(arr) {
     return arr.pop()
   },
-  indexOf: function(array, value, fromIdex) {
-    return array.join(value, fromIdex)
+  /**
+   * 使用 SameValueZero 等值比较，返回首次 value 在数组array中被找到的 索引值， 如果 fromIndex 为负值，将从数组array尾端索引进行匹配。
+   * 参数
+   * array (Array): 需要查找的数组。
+   * value (*): 需要查找的值。
+   * [fromIndex=0] (number): 开始查询的位置。
+   * 返回值
+   * (number): 返回 值value在数组中的索引位置, 没有找到为返回-1。
+   * 例子
+   * indexOf([1, 2, 1, 2], 2);
+   * // => 1
+   * // Search from the `fromIndex`.
+   * indexOf([1, 2, 1, 2], 2, 2);
+   * // => 3
+   **/
+  indexOf: function(arr, n, start = 0) {
+
+    for (var i = start; i < arr.length; i++) {
+
+
+      if (arr[i] == n) {
+        return i
+      }
+
+    }
+    return -1
   },
   nth: function(array, n) {
     return array.slice(n, n + 1)[0]
