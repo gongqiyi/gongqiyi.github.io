@@ -264,43 +264,34 @@ var FangTianYi = {
    * console.log(array);
    * // => [1]
    **/
-  concat: function(array, af) {
+  concat: function() {
     debugger
-    var arr = []
-    l = arguments.length
-    for (var i = 0; i < l; i++) {
-      if (arguments[i] instanceof Array) {
-        for (var j = 0; j < arguments[i].length; j++) {
-          arr.push(arguments[i][j])
-        }
-      } else {
-        arr.push(arguments[i])
-      }
-    }
-    return arr
-  },
-  reverse: function(arr) {
-    debugger
-    var len = arr.length
     var result = []
-    for (var i = 0; i < len; i++) {
-      result.push(arr.pop()) //pop是删除最后一个元素，shift是删除第一个
-    } //push后面一定要有值，pop后面没有
-    for (var i = 0; i < len; i++) {
-      arr.push(result[i])
-    }
-    return arr
-  },
-  pull: function(array, value) {
-
-    var index
-    for (var i = 1; i < arguments.length; i++) {
-      index = array.indexOf(arguments[i])
-      while (index >= 0) {
-        array.splice(index, 1)
-        index = array.indexOf(arguments[i])
+    for (var i = 0; i < arguments.length; i++) {
+      if (arguments[i][0] == undefined) {
+        result.push(arguments[i])
+      } else {
+        for (var j = 0; j < arguments[i].length; j++) {
+          result.push(arguments[i][j])
+        }
       }
     }
+    return result
+  },
+  /**
+
+  **/
+  reverse: function(arr) {
+
+    var result = []
+    for (var i = 0; i < arr.length; i++) {
+      result.unshift(arr[i])
+    }
+    return result
+  },
+  pull: function(array, ...values) {
+
+    array = array.filter(it => !(values.includes(it)))
     return array
   },
   pullAt: function(array, indexes) {
@@ -310,26 +301,25 @@ var FangTianYi = {
     }
     return array
   },
-  intersection: function() {
+  /**
+   * 创建唯一值的数组，这个数组包含所有给定数组都包含的元素，使用 SameValueZero进行相等性比较。（愚人码头注：可以理解为给定数组的交集）
+   * 参数
+   * [arrays] (...Array): 待检查的数组。
+   * 返回值
+   * (Array): 返回一个包含所有传入数组交集元素的新数组。
+   * 例子
+   * intersection([2, 1], [4, 2], [1, 2]);
+   * // => [2]
+   **/
+  intersection: function(...args) {
 
+    var result = args.reduce((a, b) => a.concat(b)
+      .filter(it => args[0].includes(it)))
+    var c = result.filter(v => args[1].includes(v))
+    var a = new Set(c)
+    var b = Array.from(a)
+    return b
 
-    var result = []
-    var temp
-    var isAll = true
-
-    for (var i = 0; i < arguments.length; i++) {
-      temp = arguments[0][i]
-
-      for (var j = 1; j < arguments.length; j++) {
-        if (arguments[j].indexOf(temp) < 0) { //当j=1，temp=2，从头到尾搜索数组，看2出现的次数
-          isAll = false
-        }
-      }
-      if (isAll) {
-        result.push(temp)
-      }
-    }
-    return result
   },
   /**
   *使用value值来填充array，从start位置开始，
@@ -489,22 +479,23 @@ var FangTianYi = {
     }
     return slice(-n)
   },
-  // union: function(arr) {
-  //  for (i = o; i < arr.length; i++) {
-  //    array = FangTianYi.filter(array)
-  //  }
-  //  return arr
-  // }
+  /**
+   * 创建一个按顺序排列的唯一值的数组。所有给定数组的元素值使用SameValueZero做等值比较。（愚人码头注： arrays（数组）的并集，按顺序返回，返回数组的元素是唯一的）
+   * 参数
+   * [arrays] (...Array): 要检查的数组。
+   * 返回值
+   * (Array): 返回一个新的联合数组。
+   * 例子
+   * union([2], [1, 2]);
+   * // => [2, 1]
+   **/
 
-  union: function(arrs) {
-    var result = []
-    for (var i = 0; i < arguments.length; i++) {
-      for (var j = 0; j < rguments.length; j++) {
-        if (result.indexOf(arguments[i][j] < 0)) {
-          result.push(arguments[i][j])
-        }
-      }
-    }
+  union: function(...args) {
+    debugger
+    var m = FangTianYi.flatten(args)
+    var t = new Set(m)
+    e = Array.from(t)
+    var result = e.sort((a, b) => b - a)
     return result
   },
 
