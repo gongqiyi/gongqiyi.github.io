@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <style type="text/css">
+  html,
+  body {
+    font-size: calc(100vw/10.8);
+    margin: 0;
+    padding: 0;
+    font-family: "微软雅黑";
+  }
+  
+  header {
+    background-color: #ff6243;
+    height: 1.5rem;
+    width: 100vw;
+  }
+  
+  ul {
+    height: 1.5rem;
+    width: 5.7rem;
+    display: flex;
+    list-style-type: none;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  li {
+    font-size: .42rem;
+  }
+  
+  .two {
+    position: relative;
+  }
+  
+  .twoone {
+    width: 95vw;
+    height: 1rem;
+    margin-right: 2.5vw;
+    margin-left: 2.5vw;
+  }
+  
+  .search {
+    width: 0.6rem;
+    height: 0.6rem;
+    position: absolute;
+    top: 0.65rem;
+    left: 0.32rem;
+  }
+  
+  input {
+    text-indent: 2rem;
+    font-size: 0.4rem;
+  }
+  
+  .three {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 0.2rem;
+  }
+  
+  .threeone {
+    width: 4rem;
+    height: 2.5rem;
+  }
+  
+  .threetwo {
+    width: 4rem;
+    height: 2.5rem;
+  }
+  
+  .four {
+    margin-top: 0.2rem;
+  }
+  
+  .fourone {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .fourone img {
+    width: .8rem;
+    height: .9rem;
+  }
+  
+  .fourtwo {
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.2rem;
+  }
+  </style>
+</head>
+
+<body>
+  <header>
+    <ul>
+      <li>徐静</li>
+      <li>同学</li>
+      <li>生日</li>
+      <li>快乐</li>
+    </ul>
+  </header>
+  <div class="two">
+    <input class="twoone" value="搜索小王子的好朋友：易颖">
+    <img class="search" src="1.png">
+  </div>
+  <div class="three">
+    <img class="threeone" src="7.jpg">
+    <img class="threetwo" src="8.png">
+  </div>
+  <div class="four">
+    <div class="fourone">
+      <img src="11.jpg">
+      <img src="12.jpg">
+      <img src="13.jpg">
+      <img src="14.jpg">
+      <img src="15.jpg">
+    </div>
+    <div class="fourtwo">
+      <span>你好啊</span>
+      <span>和我一起拍电影吧</span>
+      <span>不再被人坑</span>
+      <span>别被气死</span>
+      <span>永远18</span>
+    </div>
+  </div>
+  <div class="four">
+    <div class="fourone">
+      <img src="16.jpg">
+      <img src="17.jpg">
+      <img src="18.jpg">
+      <img src="19.jpg">
+      <img src="20.jpg">
+    </div>
+    <div class="fourtwo">
+      <span>跟我一样美</span>
+      <span>又没睡醒</span>
+      <span>又是一个通宵</span>
+      <span>三杀了</span>
+      <span>得到新英雄了</span>
+    </div>
+  </div>
+</body>
+
+</html>
